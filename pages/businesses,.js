@@ -1,4 +1,4 @@
-import withAuth from '../components/withAuth';
+import withAuth from '../hoc/withAuth';
 import { gql, useQuery } from '@apollo/client';
 
 const BUSINESS_LIST_QUERY = gql`
