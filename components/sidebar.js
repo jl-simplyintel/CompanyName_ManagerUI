@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { FaHome, FaBusinessTime, FaUserAlt, FaSignOutAlt, FaBox, FaStar, FaRegCommentAlt } from 'react-icons/fa';
+import { FaHome, FaBusinessTime, FaUserAlt, FaSignOutAlt, FaBox, FaStar, FaRegCommentAlt, FaBriefcase } from 'react-icons/fa';
 
 export default function Sidebar({ user }) {
   const [businesses, setBusinesses] = useState([]);
@@ -154,6 +154,14 @@ export default function Sidebar({ user }) {
                   {!isCollapsed && (
                     <span className="text-base">Products and Services</span>
                   )}
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href="/job-listings">
+                <div className="flex items-center space-x-4 cursor-pointer hover:bg-gray-700 p-3 rounded-md transition-colors duration-200">
+                  <FaBriefcase  className="text-xl" />
+                  {!isCollapsed && <span className="text-base">Job Listings</span>}
                 </div>
               </Link>
             </li>
