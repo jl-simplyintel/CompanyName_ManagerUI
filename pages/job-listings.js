@@ -236,7 +236,7 @@ export default function JobListingsPage() {
                     onChange={(e) => handleFieldChange(e, 'salary')}
                     className="mb-2 w-full p-2 border rounded"
                   />
-                  <div className="flex justify-between">
+                  <div className="flex justify-between mt-4">
                     <button
                       className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700 transition duration-300"
                       onClick={() => handleUpdate(job.id)}
@@ -254,34 +254,35 @@ export default function JobListingsPage() {
               ) : (
                 // View mode - Show job details
                 <div>
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="mb-4">
                     <h3 className="text-lg font-semibold">{job.title}</h3>
-                    
+                    <p className="text-sm mb-2">Location: {job.location}</p>
+                    <p className="text-sm mb-2">Salary: {job.salary ? `$${job.salary}` : 'N/A'}</p>
+                    <p className="text-sm mb-2">Description: {job.description}</p>
+                    <p className="text-xs text-gray-400">Created on: {new Date(job.createdAt).toLocaleDateString()}</p>
                   </div>
-                  <p className="text-sm mb-2">Location: {job.location}</p>
-                  <p className="text-sm mb-2">Salary: {job.salary ? `$${job.salary}` : 'N/A'}</p>
-                  <p className="text-sm mb-2">Description: {job.description}</p>
-                  <p className="text-xs text-gray-400">Created on: {new Date(job.createdAt).toLocaleDateString()}</p>
+
                   <input
                     type="checkbox"
                     checked={selectedJobs.includes(job.id)}
                     onChange={() => toggleSelectJob(job.id)}
                     className="mt-2"
                   />
-                  <div className="space-x-2">
-                      <button
-                        className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 transition duration-300"
-                        onClick={() => handleEdit(job)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700 transition duration-300"
-                        onClick={() => handleDelete(job.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
+
+                  <div className="flex justify-between mt-4">
+                    <button
+                      className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 transition duration-300"
+                      onClick={() => handleEdit(job)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700 transition duration-300"
+                      onClick={() => handleDelete(job.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
