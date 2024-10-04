@@ -164,7 +164,7 @@ export default function Products() {
                   {product.images.map((image) => (
                     <SwiperSlide key={image.id}>
                       <img
-                        src={`https://companynameadmin-008a72cce60a.herokuapp.com/${image.file.url}`}
+                        src={`https://companynameadmin-008a72cce60a.herokuapp.com${image.file.url}`}
                         alt={product.name}
                         className="w-full h-48 object-cover rounded-lg"
                       />

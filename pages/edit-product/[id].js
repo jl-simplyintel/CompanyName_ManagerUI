@@ -405,7 +405,7 @@ export default function EditProduct() {
           {images.map((image) => (
             <div key={image.id} className="relative group">
               <img
-                src={`https://companynameadmin-008a72cce60a.herokuapp.com/${image.file.url}`}
+                src={`https://companynameadmin-008a72cce60a.herokuapp.com${image.file.url}`}
                 alt="Product Image"
                 className="w-full h-40 object-cover rounded-lg shadow-sm transition-transform transform group-hover:scale-105"
               />
