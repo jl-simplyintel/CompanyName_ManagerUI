@@ -256,7 +256,19 @@ export default function JobListingsPage() {
                 <div>
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">{job.title}</h3>
-                    <div className="space-x-2">
+                    
+                  </div>
+                  <p className="text-sm mb-2">Location: {job.location}</p>
+                  <p className="text-sm mb-2">Salary: {job.salary ? `$${job.salary}` : 'N/A'}</p>
+                  <p className="text-sm mb-2">Description: {job.description}</p>
+                  <p className="text-xs text-gray-400">Created on: {new Date(job.createdAt).toLocaleDateString()}</p>
+                  <input
+                    type="checkbox"
+                    checked={selectedJobs.includes(job.id)}
+                    onChange={() => toggleSelectJob(job.id)}
+                    className="mt-2"
+                  />
+                  <div className="space-x-2">
                       <button
                         className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 transition duration-300"
                         onClick={() => handleEdit(job)}
@@ -270,17 +282,6 @@ export default function JobListingsPage() {
                         Delete
                       </button>
                     </div>
-                  </div>
-                  <p className="text-sm mb-2">Location: {job.location}</p>
-                  <p className="text-sm mb-2">Salary: {job.salary ? `$${job.salary}` : 'N/A'}</p>
-                  <p className="text-sm mb-2">Description: {job.description}</p>
-                  <p className="text-xs text-gray-400">Created on: {new Date(job.createdAt).toLocaleDateString()}</p>
-                  <input
-                    type="checkbox"
-                    checked={selectedJobs.includes(job.id)}
-                    onChange={() => toggleSelectJob(job.id)}
-                    className="mt-2"
-                  />
                 </div>
               )}
             </div>
