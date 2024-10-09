@@ -1,18 +1,25 @@
-import { useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'; // Classic CKEditor build
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 export default function BasicInformation({ business }) {
-  const [formData, setFormData] = useState(business);
+  const [formData, setFormData] = useState(business || {});
+  const [editorLoaded, setEditorLoaded] = useState(false);
+
+  useEffect(() => {
+    setEditorLoaded(true); // Set the editor as loaded on client-side
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleEditorChange = (event, editor) => {
-    const data = editor.getData();
-    setFormData({ ...formData, description: data });
+  const handleEditorChange = (value) => {
+    setFormData({ ...formData, description: value });
   };
 
   const handleSubmit = async (e) => {
@@ -107,11 +114,12 @@ export default function BasicInformation({ business }) {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Description</label>
-        <CKEditor
-          editor={ClassicEditor}
-          data={formData.description || ''} // Initial data from state
-          onChange={handleEditorChange} // Capture editor content
-        />
+        {editorLoaded && (  // Only render the editor if it's loaded
+          <ReactQuill
+            value={formData.description || ''}
+            onChange={handleEditorChange}
+          />
+        )}
       </div>
       <button
         type="submit"
