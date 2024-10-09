@@ -1,9 +1,20 @@
-import { useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'; // Classic CKEditor build
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically load CKEditor to prevent SSR issues
+const CKEditor = dynamic(() => import('@ckeditor/ckeditor5-react').then(mod => mod.CKEditor), {
+  ssr: false, // This ensures that CKEditor is only loaded on the client side
+});
+const ClassicEditor = dynamic(() => import('@ckeditor/ckeditor5-build-classic'), { ssr: false });
 
 export default function BasicInformation({ business }) {
   const [formData, setFormData] = useState(business);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // This ensures CKEditor is only rendered on the client-side
+    setIsClient(true);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,11 +118,13 @@ export default function BasicInformation({ business }) {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Description</label>
-        <CKEditor
-          editor={ClassicEditor}
-          data={formData.description || ''} // Initial data from state
-          onChange={handleEditorChange} // Capture editor content
-        />
+        {isClient && (
+          <CKEditor
+            editor={ClassicEditor}
+            data={formData.description || ''} // Initial data from state
+            onChange={handleEditorChange} // Capture editor content
+          />
+        )}
       </div>
       <button
         type="submit"
