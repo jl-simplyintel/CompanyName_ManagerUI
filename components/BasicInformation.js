@@ -1,25 +1,11 @@
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-
-// Dynamically import ReactQuill with SSR disabled
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import { useState } from 'react';
 
 export default function BasicInformation({ business }) {
-  const [formData, setFormData] = useState(business || {});
-  const [editorLoaded, setEditorLoaded] = useState(false);
-
-  useEffect(() => {
-    setEditorLoaded(true); // Set the editor as loaded on client-side
-  }, []);
+  const [formData, setFormData] = useState(business);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleEditorChange = (value) => {
-    setFormData({ ...formData, description: value });
   };
 
   const handleSubmit = async (e) => {
@@ -114,12 +100,14 @@ export default function BasicInformation({ business }) {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Description</label>
-        {editorLoaded && (  // Only render the editor if it's loaded
-          <ReactQuill
-            value={formData.description || ''}
-            onChange={handleEditorChange}
-          />
-        )}
+        <textarea
+          name="description"
+          value={formData.description || ''}
+          onChange={handleChange}
+          className="mt-1 block w-full border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-md rounded-md px-2"
+          rows="3"
+          placeholder="Enter a description"
+        />
       </div>
       <button
         type="submit"

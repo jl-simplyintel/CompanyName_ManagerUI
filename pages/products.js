@@ -1,3 +1,4 @@
+// manager-ui\pages\products.js
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react'; // Import useSession from next-auth
 import Link from 'next/link';
