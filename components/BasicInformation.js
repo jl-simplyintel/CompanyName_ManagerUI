@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import CKEditorClient from './CKEditorClient'; // Import the new CKEditorClient component
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'; // Classic CKEditor build
 
 export default function BasicInformation({ business }) {
-  const [formData, setFormData] = useState(business || {});
+  const [formData, setFormData] = useState(business);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleEditorChange = (description) => {
-    setFormData({ ...formData, description });
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setFormData({ ...formData, description: data });
   };
 
   const handleSubmit = async (e) => {
@@ -105,7 +107,11 @@ export default function BasicInformation({ business }) {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Description</label>
-        <CKEditorClient data={formData.description || ''} onChange={handleEditorChange} />
+        <CKEditor
+          editor={ClassicEditor}
+          data={formData.description || ''} // Initial data from state
+          onChange={handleEditorChange} // Capture editor content
+        />
       </div>
       <button
         type="submit"
